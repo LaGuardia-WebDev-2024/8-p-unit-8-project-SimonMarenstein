@@ -10,7 +10,7 @@ Select ONE Additional
 [ no ] Feature 2 - Include keyPressed feature
 [ no ] Feature 3 - Include mouseClicked feature
 [ no ] Feature 4 - Change Cursor 
-[ no ] Feature 5 - Include random(__,__) 
+[ yes ] Feature 5 - Include random(__,__) 
 [ no ] Feature 6 - Include animation
 -->
 
@@ -18,19 +18,76 @@ Select ONE Additional
 
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>Unit 8 Project</title>
-    <link href="style.css" rel="stylesheet" type="text/css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/processing.js/1.6.6/processing.min.js"></script>
-    <style></style>
-  </head>
+<head>
+<meta charset="UTF-8">
+<title>Ocean Scene</title>
+</head>
 
-  <body>
-    <h1>The Ocean</h1>
-    <canvas id="myCanvas" data-processing-sources="myP5Code.pde"> </canvas>
-  </body>
+<body>
+
+<h1>The Ocean</h1>
+
+<canvas id="oceanCanvas" width="600" height="400"></canvas>
+
+<script>
+let canvas = document.getElementById("oceanCanvas");
+let ctx = canvas.getContext("2d");
+
+// draw the ocean water
+function ocean(x, y, w, h){
+  ctx.fillStyle = "rgb(0,100,200)";
+  ctx.fillRect(x, y, w, h);
+}
+
+// function to draw a fish
+function fish(x, y, r, g, b){
+  ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
+  
+  ctx.beginPath();
+  ctx.ellipse(x, y, 20, 10, 0, 0, Math.PI*2);
+  ctx.fill();
+
+  ctx.beginPath(); // tail
+  ctx.moveTo(x-20, y);
+  ctx.lineTo(x-35, y-10);
+  ctx.lineTo(x-35, y+10);
+  ctx.fill();
+
+  ctx.fillStyle = "black"; // eye
+  ctx.beginPath();
+  ctx.arc(x+10, y-3, 3, 0, Math.PI*2);
+  ctx.fill();
+}
+
+// draws seaweed
+function seaweed(x, y, h){
+  ctx.strokeStyle = "green";
+  ctx.lineWidth = 3;
+
+  ctx.beginPath();
+  ctx.moveTo(x,y);
+  ctx.lineTo(x,y-h);
+  ctx.stroke();
+}
+
+// sky background
+ctx.fillStyle = "rgb(120,200,255)";
+ctx.fillRect(0,0,600,400);
+
+// ocean
+ocean(0,250,600,150);
+
+// fish with random colors
+fish(120,300, Math.random()*255, Math.random()*255, Math.random()*255);
+fish(250,320, Math.random()*255, Math.random()*255, Math.random()*255);
+fish(420,290, Math.random()*255, Math.random()*255, Math.random()*255);
+
+// seaweed
+seaweed(80,350,50);
+seaweed(150,350,60);
+seaweed(500,350,55);
+
+</script>
+
+</body>
 </html>
-
-<!--- Taken From Khan Academy Intro to JS: Drawing & Animation --->
